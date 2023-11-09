@@ -1,5 +1,6 @@
 from django.http import HttpRequest, HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect
+from django.urls import reverse
 
 
 # Create your views here.
@@ -22,7 +23,12 @@ def categories_by_re(request, year):
     if year > 2023:
         # return redirect('/detail/', permanent=True) # use URL address
         # return redirect(index) # use view function
-        return redirect('home') # use the route name, recommended
+        # return redirect('home')  # use the route name, recommended
+        # url = reverse('/') +
+        # return redirect(reverse('home')) +
+        # return redirect(reverse(categories, args=(1,))) +
+        return redirect(reverse('cats_id', args=[1]))
+
     return HttpResponse(f'<h1>Archive: </h1><p>Year: {year}')
 
 
@@ -49,3 +55,7 @@ def posts_list(request, year):
         return HttpResponse(f'posts: {year}')
     else:
         raise Http404()
+
+
+def about_view(request):
+    return HttpResponse('<h1>Hello from about</h1>')
