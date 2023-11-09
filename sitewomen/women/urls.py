@@ -10,4 +10,6 @@ urlpatterns = [
     path('cats/<slug:cat_slug>/', views.categories_by_slug),
     path('cats/posts/<int:cat_id>/<slug:cat_slug>/', views.categories_by_double),
     path('archive/<year4:year>/', views.categories_by_re),
+    path('detail/', views.post_detail),
+    path('posts/<int:year>', views.posts_list),
 ]
