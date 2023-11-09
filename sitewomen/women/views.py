@@ -1,5 +1,5 @@
 from django.http import HttpRequest, HttpResponse, HttpResponseNotFound, Http404
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 # Create your views here.
@@ -20,7 +20,9 @@ def categories_by_slug(request, cat_slug):
 
 def categories_by_re(request, year):
     if year > 2023:
-        raise Http404()
+        # return redirect('/detail/', permanent=True) # use URL address
+        # return redirect(index) # use view function
+        return redirect('home') # use the route name, recommended
     return HttpResponse(f'<h1>Archive: </h1><p>Year: {year}')
 
 
