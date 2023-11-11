@@ -13,4 +13,5 @@ urlpatterns = [
     path('detail/', views.post_detail, name='details'),
     path('posts/<int:year>', views.posts_list, name='posts'),
     path('about/', views.about, name='about'),
+    path('biography/', views.biography, name='bio'),
 ]

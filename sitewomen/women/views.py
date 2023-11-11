@@ -9,6 +9,13 @@ from django.template.defaultfilters import center
 menu = ['О сайте', 'Добавить статью', 'Обратная связь', 'Войти']
 my_date = datetime.now()
 
+data_db = [
+    {'id': 1, 'title': 'Анджелина Джоли', 'content': 'Биография Анджелины Джоли', 'is_published': True},
+    {'id': 2, 'title': 'Марго Робби', 'content': 'Бтография Марго Робби', 'is_published': False},
+    {'id': 3, 'title': 'Джулия Робертс', 'content': 'Биография Джулии Робертс', 'is_published': True},
+]
+
+
 # Create your views here.
 class MyClass:
 
@@ -32,9 +39,30 @@ def index(request: HttpRequest) -> HttpResponse:
         'dict': {'key1': 'value1', 'key2': 'value2'},
         'obj': MyClass(10, 20),
         'my_date': my_date,
-        'value': None
+        'value': True
     }
     return render(request, 'women/index.html', context=context)
+
+
+def biography(request):
+    context = {
+        'title': 'биография',
+        'menu': menu,
+        'posts': data_db,
+        'show_menu': True
+    }
+
+    data1 = {
+        'form_data': {'is_data': True, 'username': 'root', 'password': '1234'},
+    }
+
+    data = {
+        'is_draft': False,
+        'content': "super content",
+        'title': "super post",
+    }
+
+    return render(request, 'women/biography.html', context=data)
 
 
 def about(request):
