@@ -1,12 +1,45 @@
+from datetime import datetime
+
 from django.http import HttpRequest, HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.template.loader import render_to_string
+from django.template.defaultfilters import center
 
+menu = ['О сайте', 'Добавить статью', 'Обратная связь', 'Войти']
+my_date = datetime.now()
 
 # Create your views here.
+class MyClass:
+
+    def __init__(self, x: int, y: int):
+        self.x = x
+        self.y = y
+
+    def get_coord(self):
+        return f'x = {self.x}, y = {self.y}'
+
 
 def index(request: HttpRequest) -> HttpResponse:
-    return HttpResponse('<h1>Main page</h1>')
+    # t = render_to_string('women/index.html')
+    # return HttpResponse(t)
+    context = {
+        'title': 'Главная страница',
+        'menu': menu,
+        'float': 28.68,
+        'lst': [1, 2, 'abc', True],
+        'set': {1, 2, 3, 4, 5},
+        'dict': {'key1': 'value1', 'key2': 'value2'},
+        'obj': MyClass(10, 20),
+        'my_date': my_date,
+        'value': None
+    }
+    return render(request, 'women/index.html', context=context)
+
+
+def about(request):
+    context = {'title': 'Страница о сайте'}
+    return render(request, 'women/about.html', context=context)
 
 
 def categories(request, cat_id):
@@ -55,7 +88,3 @@ def posts_list(request, year):
         return HttpResponse(f'posts: {year}')
     else:
         raise Http404()
-
-
-def about_view(request):
-    return HttpResponse('<h1>Hello from about</h1>')

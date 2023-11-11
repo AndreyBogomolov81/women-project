@@ -12,5 +12,5 @@ urlpatterns = [
     path('archive/<year4:year>/', views.categories_by_re, name='archive'),
     path('detail/', views.post_detail, name='details'),
     path('posts/<int:year>', views.posts_list, name='posts'),
-    path('about/', views.about_view, name='about_name')
+    path('about/', views.about, name='about'),
 ]

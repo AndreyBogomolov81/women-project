@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-&zoas4@s($81o$2xn*_r=j0wbwbbbhjylhnt@z&d42#8$4o_2$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'women.apps.WomenConfig'
+    'women.apps.WomenConfig',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +56,10 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
-        'APP_DIRS': True,
+        # 'DIRS': [
+        #     BASE_DIR / 'women' / 'templates'
+        # ], # позволяет прописывать нестандартные пути к шаблонам
+        'APP_DIRS': True, # указывает что внутри приложений надо искать шаблоны в teplates
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
