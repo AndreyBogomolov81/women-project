@@ -55,7 +55,9 @@ ROOT_URLCONF = 'sitewomen.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / 'templates'
+        ],
         # 'DIRS': [
         #     BASE_DIR / 'women' / 'templates'
         # ], # позволяет прописывать нестандартные пути к шаблонам

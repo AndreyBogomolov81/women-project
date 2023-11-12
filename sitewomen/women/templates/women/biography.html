@@ -15,6 +15,7 @@
         <li>
             <h2>{{p.title}}</h2>
             <p>{{p.content}}</p>
+            <p><a target="_blank" href="{% url 'post' p.id %}">Читать пост</a></p>
             {% if not forloop.last %}
             <hr>
             {% endif %}
@@ -24,12 +25,6 @@
 
         {% endfor %}
     </ul>
-    <h3>Test</h3>
-    {% if not is_draft %}
-    <p>Test Ok!</p>
-    {% endif %}
-
-
 </body>
 
 </html>

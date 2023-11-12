@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+</head>
+
+<body>
+    <ul>
+        <li><a href="{% url 'home' %}">Главная страница</a></li>
+        {% for elem in menu %}
+        {% if not forloop.last %}
+        <li>
+            <a target="_blank" href="{% url elem.url_name %}">{{elem.title}}</a>
+        </li>
+        {% else %}
+        <li class="last">
+            <a target="_blank" href="{% url elem.url_name %}">{{elem.title}}</a>
+        </li>
+        {% endif %}
+
+        {% endfor %}
+    </ul>
+
+    {% block content %}
+
+    {% endblock content %}
+</body>
+
+</html>

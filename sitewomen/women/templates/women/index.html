@@ -1,21 +1,29 @@
-<!DOCTYPE html>
-<html lang="ru">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>{{title}}</title>
-</head>
+{% block content %}
+<h1>{{title|capfirst}}</h1>
 
-<body>
-    <h1>{{title}}</h1>
-    <p>{{menu}}</p>
-    <p>{{float}}</p>
-    <p>{{lst}}</p>
-    <p>{{set}}</p>
-    <p>{{dict.key1}}</p>
-    <p>{{obj.get_coord}}</p>
-    <p>{{my_date|date:"l F"}}</p>
-    <p>{{value|yesno:'yes,not,maybe'}}</p>
-</body>
+{% include 'women/includes/nav.html' only with title2='new_var' %}
 
-</html>
+
+<ul>
+    {% for p in posts %}
+    {% if p.is_published %}
+    <li>
+        <h2>{{p.title}}</h2>
+        <p>{{p.content}}</p>
+        <p><a target="_blank" href="{% url 'post' p.id %}">Читать пост</a></p>
+        {% if not forloop.last %}
+        <hr>
+        {% endif %}
+
+    </li>
+    {% endif %}
+
+    {% endfor %}
+</ul>
+
+
+{% include 'women/includes/nav.html' only %}
+
+{% endblock content %}

@@ -6,8 +6,15 @@ from django.urls import reverse
 from django.template.loader import render_to_string
 from django.template.defaultfilters import center
 
-menu = ['О сайте', 'Добавить статью', 'Обратная связь', 'Войти']
+menu_0 = ['О сайте', 'Добавить статью', 'Обратная связь', 'Войти']
 my_date = datetime.now()
+
+menu = [
+    {'title': 'О сайте', 'url_name': 'about'},
+    {'title': 'Добавить статью', 'url_name': 'add_page'},
+    {'title': 'Обратная связь', 'url_name': 'contact'},
+    {'title': 'Войти', 'url_name': 'login'},
+]
 
 data_db = [
     {'id': 1, 'title': 'Анджелина Джоли', 'content': 'Биография Анджелины Джоли', 'is_published': True},
@@ -27,19 +34,27 @@ class MyClass:
         return f'x = {self.x}, y = {self.y}'
 
 
+# def index(request: HttpRequest) -> HttpResponse:
+#     # t = render_to_string('women/index.html')
+#     # return HttpResponse(t)
+#     context = {
+#         'title': 'Главная страница',
+#         'menu': menu,
+#         'float': 28.68,
+#         'lst': [1, 2, 'abc', True],
+#         'set': {1, 2, 3, 4, 5},
+#         'dict': {'key1': 'value1', 'key2': 'value2'},
+#         'obj': MyClass(10, 20),
+#         'my_date': my_date,
+#         'value': True
+#     }
+#     return render(request, 'women/index.html', context=context)
+
 def index(request: HttpRequest) -> HttpResponse:
-    # t = render_to_string('women/index.html')
-    # return HttpResponse(t)
     context = {
-        'title': 'Главная страница',
+        'title': 'главная страница',
         'menu': menu,
-        'float': 28.68,
-        'lst': [1, 2, 'abc', True],
-        'set': {1, 2, 3, 4, 5},
-        'dict': {'key1': 'value1', 'key2': 'value2'},
-        'obj': MyClass(10, 20),
-        'my_date': my_date,
-        'value': True
+        'posts': data_db
     }
     return render(request, 'women/index.html', context=context)
 
@@ -62,18 +77,18 @@ def biography(request):
         'title': "super post",
     }
 
-    return render(request, 'women/biography.html', context=data)
+    return render(request, 'women/biography.html', context=context)
 
 
 def about(request):
-    context = {'title': 'Страница о сайте'}
+    context = {'title': 'страница о сайте', 'menu': menu}
     return render(request, 'women/about.html', context=context)
 
 
-def categories(request, cat_id):
-    if request.GET:
-        print(request.GET)
-    return HttpResponse(f'<h1>Categories</h1><p>Cat id: {cat_id}')
+# def categories(request, cat_id):
+#     if request.GET:
+#         print(request.GET)
+#     return HttpResponse(f'<h1>Categories</h1><p>Cat id: {cat_id}')
 
 
 def categories_by_slug(request, cat_slug):
@@ -111,8 +126,40 @@ def post_detail(request):
     return HttpResponse(response)
 
 
-def posts_list(request, year):
-    if year in range(1990, 2024):
-        return HttpResponse(f'posts: {year}')
-    else:
-        raise Http404()
+# def posts_list(request, year):
+#     if year in range(1990, 2024):
+#         return HttpResponse(f'posts: {year}')
+#     else:
+#         raise Http404()
+
+def show_post(request, post_id):
+    return HttpResponse(f'Пост: id={post_id}')
+
+
+def addpage(request):
+    return HttpResponse('<h1>Добавление статьи</h1>')
+
+
+def contact(request):
+    return HttpResponse('<h1>Обратная связь</h1>')
+
+
+def login(request):
+    return HttpResponse('<h1>Авторизация</h1>')
+
+
+def post_archive(request, year, post_id):
+    return HttpResponse(f'Year: {year} Post`s id {post_id}')
+
+
+def post_details(request, year, post_id):
+    # url = reverse('cats_id', kwargs={'year': year, 'post_id': post_id})
+    url = reverse('cats_id', kwargs={'year': year, 'post_id': post_id})
+    print(url)
+    return redirect(url)
+
+
+def categories(request, year, post_id):
+    if request.GET:
+        print(request.GET)
+    return HttpResponse(f'<h1>Categories</h1><p>Year: {year} Post ID: {post_id}')
