@@ -24,6 +24,12 @@ data_db = [
     {'id': 3, 'title': 'Джулия Робертс', 'content': 'Биография Джулия Робертс', 'is_published': True},
 ]
 
+cats_db = [
+    {'id': 1, 'name': 'Актрисы'},
+    {'id': 2, 'name': 'Певицы'},
+    {'id': 3, 'name': 'Спортсменки'},
+]
+
 
 # Create your views here.
 class MyClass:
@@ -53,10 +59,12 @@ class MyClass:
 #     return render(request, 'women/index.html', context=context)
 
 def index(request: HttpRequest) -> HttpResponse:
+    print('call index')
     context = {
         'title': 'главная страница',
         'menu': menu,
-        'posts': data_db
+        'posts': data_db,
+        'cat_selected': 0,
     }
     return render(request, 'women/index.html', context=context)
 
@@ -165,3 +173,15 @@ def categories(request, year, post_id):
     if request.GET:
         print(request.GET)
     return HttpResponse(f'<h1>Categories</h1><p>Year: {year} Post ID: {post_id}')
+
+
+def show_category(request, cat_id):
+    print('call show_category from views')
+    print(f'passed arg to show_category cat_id: {cat_id}')
+    context = {
+        'title': 'отображение по рубрикам',
+        'menu': menu,
+        'posts': data_db,
+        'cat_selected': cat_id,
+    }
+    return render(request, 'women/index.html', context=context)

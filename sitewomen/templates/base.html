@@ -1,4 +1,6 @@
 {% load static %}
+{% load women_tags %}
+
 <!DOCTYPE html>
 <html>
 
@@ -38,9 +40,11 @@
             <td valign="top" class="left-chapters">
               <ul id="leftchapters">
                 <li class="selected">Все категории</li>
-                <li><a href="#">Актрисы</a></li>
-                <li><a href="#">Певицы</a></li>
-                <li><a href="#">Спортсменки</a></li>
+
+                {% show_categories cat_selected %}
+
+
+
                 <li class="share">
                   <p>Наш канал</p>
                   <a class="share-yt" href="https://www.youtube.com/channel/UClJzWfGWuGJL2t-3dYKcHTA/playlists"
