@@ -61,11 +61,11 @@ class MyClass:
 #     return render(request, 'women/index.html', context=context)
 
 def index(request: HttpRequest) -> HttpResponse:
-    print('call index')
+    posts = Women.objects.filter(is_published=1)
     context = {
         'title': 'главная страница',
         'menu': menu,
-        'posts': data_db,
+        'posts': posts,
         'cat_selected': 0,
     }
     return render(request, 'women/index.html', context=context)
@@ -145,13 +145,13 @@ def post_detail(request):
 #         raise Http404()
 
 def show_post(request, post_slug):
-    post = get_object_or_404(Women, pk=post_slug)
+    post = get_object_or_404(Women, slug=post_slug)
 
     data = {
         'title': post.title,
         'menu': menu,
         'post': post,
-        # 'cat_selected': 1,
+        'cat_selected': 1,
     }
     return render(request, 'women/post.html', context=data)
 
@@ -186,8 +186,6 @@ def categories(request, year, post_id):
 
 
 def show_category(request, cat_id):
-    print('call show_category from views')
-    print(f'passed arg to show_category cat_id: {cat_id}')
     context = {
         'title': 'отображение по рубрикам',
         'menu': menu,
