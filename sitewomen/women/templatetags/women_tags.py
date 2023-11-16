@@ -22,6 +22,3 @@ def show_categories(cat_selected=0):
     return {'cats': cats, 'cat_selected': cat_selected}
 
 
-@register.inclusion_tag('women/mainmenu.html')
-def show_list(items=None):
-    return {'items': items}

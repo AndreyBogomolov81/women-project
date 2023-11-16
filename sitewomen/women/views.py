@@ -1,10 +1,12 @@
 from datetime import datetime
 
 from django.http import HttpRequest, HttpResponse, HttpResponseNotFound, Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.template.loader import render_to_string
 from django.template.defaultfilters import center
+
+from women.models import Women
 
 menu_0 = ['О сайте', 'Добавить статью', 'Обратная связь', 'Войти']
 my_date = datetime.now()
@@ -142,8 +144,16 @@ def post_detail(request):
 #     else:
 #         raise Http404()
 
-def show_post(request, post_id):
-    return HttpResponse(f'Пост: id={post_id}')
+def show_post(request, post_slug):
+    post = get_object_or_404(Women, pk=post_slug)
+
+    data = {
+        'title': post.title,
+        'menu': menu,
+        'post': post,
+        # 'cat_selected': 1,
+    }
+    return render(request, 'women/post.html', context=data)
 
 
 def addpage(request):
