@@ -61,7 +61,7 @@ class MyClass:
 #     return render(request, 'women/index.html', context=context)
 
 def index(request: HttpRequest) -> HttpResponse:
-    posts = Women.objects.filter(is_published=1)
+    posts = Women.published.all()
     context = {
         'title': 'главная страница',
         'menu': menu,
