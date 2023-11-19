@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.template.loader import render_to_string
 from django.template.defaultfilters import center
 
-from women.models import Women
+from women.models import Women, Category
 
 menu_0 = ['О сайте', 'Добавить статью', 'Обратная связь', 'Войти']
 my_date = datetime.now()
@@ -26,11 +26,11 @@ data_db = [
     {'id': 3, 'title': 'Джулия Робертс', 'content': 'Биография Джулия Робертс', 'is_published': True},
 ]
 
-cats_db = [
-    {'id': 1, 'name': 'Актрисы'},
-    {'id': 2, 'name': 'Певицы'},
-    {'id': 3, 'name': 'Спортсменки'},
-]
+# cats_db = [
+#     {'id': 1, 'name': 'Актрисы'},
+#     {'id': 2, 'name': 'Певицы'},
+#     {'id': 3, 'name': 'Спортсменки'},
+# ]
 
 
 # Create your views here.
@@ -185,11 +185,14 @@ def categories(request, year, post_id):
     return HttpResponse(f'<h1>Categories</h1><p>Year: {year} Post ID: {post_id}')
 
 
-def show_category(request, cat_id):
+def show_category(request, cat_slug):
+    category = get_object_or_404(Category, slug=cat_slug)
+    posts = Women.published.filter(cat_id=category.pk)
+
     context = {
-        'title': 'отображение по рубрикам',
+        'title': f'Рубрика: {category.name}',
         'menu': menu,
-        'posts': data_db,
-        'cat_selected': cat_id,
+        'posts': posts,
+        'cat_selected': category.pk,
     }
     return render(request, 'women/index.html', context=context)

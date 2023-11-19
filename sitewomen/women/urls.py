@@ -21,5 +21,5 @@ urlpatterns = [
     path('biography/', views.biography, name='bio'),
     # path('post/archive/<int:year>/<int:post_id>', views.post_archive, name='post_archive'),
     path('post/archive/<int:year>/<int:post_id>/', views.post_details, name='post_archive'),
-    path('category/<int:cat_id>/', views.show_category, name='category'),
+    path('category/<slug:cat_slug>/', views.show_category, name='category'),
 ]
