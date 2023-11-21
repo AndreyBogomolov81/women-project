@@ -1,7 +1,7 @@
 from django import template
 
 import women.views as views
-from women.models import Category
+from women.models import Category, TagPost
 
 register = template.Library()  # для последующей регистрации тегов
 
@@ -23,3 +23,6 @@ def show_categories(cat_selected=0):
     return {'cats': cats, 'cat_selected': cat_selected}
 
 
+@register.inclusion_tag('women/list-tags.html')
+def show_all_tags():
+    return {'tags': TagPost.objects.all()}

@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.template.loader import render_to_string
 from django.template.defaultfilters import center
 
-from women.models import Women, Category
+from women.models import Women, Category, TagPost
 
 menu_0 = ['О сайте', 'Добавить статью', 'Обратная связь', 'Войти']
 my_date = datetime.now()
@@ -25,6 +25,7 @@ data_db = [
     {'id': 2, 'title': 'Марго Робби', 'content': 'Биография Марго Робби', 'is_published': False},
     {'id': 3, 'title': 'Джулия Робертс', 'content': 'Биография Джулия Робертс', 'is_published': True},
 ]
+
 
 # cats_db = [
 #     {'id': 1, 'name': 'Актрисы'},
@@ -195,4 +196,18 @@ def show_category(request, cat_slug):
         'posts': posts,
         'cat_selected': category.pk,
     }
+    return render(request, 'women/index.html', context=context)
+
+
+def show_tag_postlist(request, tag_slug):
+    tag = get_object_or_404(TagPost, slug=tag_slug)
+    posts = tag.ts.filter(is_published=Women.Status.PUBLISHED)
+
+    context = {
+        'title': f'Тег: {tag.tag}',
+        'menu': menu,
+        'posts': posts,
+        'cat_selected': None,
+    }
+
     return render(request, 'women/index.html', context=context)
